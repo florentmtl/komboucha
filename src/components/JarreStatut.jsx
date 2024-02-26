@@ -12,13 +12,15 @@ export function JarreStatut({ sendData }) {
                 'Accept': 'application/json; charset=UTF-8'
             },
         }).then((response) => response.json()).then((data) => {
-            setCurrentJarre(data.at(-1))
+            if (data) {setCurrentJarre(data.at(-1))}
         })
     }, [sendData]);
 
-    return <div>
+    return <>
+        {currentJarre && <div>
         <div>Sucre : {currentJarre.sucre} grammes</div>
         <div>Thé noir : {currentJarre.theNoir} sachets</div>
         <div>Thé vert : {currentJarre.theVert} sachets</div>
-    </div>
+        </div>}
+    </>
 }
