@@ -1,37 +1,6 @@
 import { SliderIngredient } from './forms/SliderIngredient.jsx';
-import { useEffect, useState } from 'react';
 
-export function JarreSliders({ sendData, setSendData, toggleShowSliders }) {
-  const [sucre, setSucre] = useState('200');
-  const [theVert, setTheVert] = useState('2');
-  const [theNoir, setTheNoir] = useState('5');
-
-  useEffect(() => {
-    if (sendData) {
-      fetch('http://localhost:4000/jarres', {
-        method: 'POST',
-        body: JSON.stringify({
-          id: 4,
-          sucre: sucre,
-          theVert: theVert,
-          theNoir: theNoir,
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      setSendData(false);
-      toggleShowSliders();
-    }
-  }, [sendData]);
-
+export function JarreSliders({ sucre, setSucre, theVert, setTheVert, theNoir, setTheNoir }) {
   return (
     <div>
       <SliderIngredient
@@ -52,7 +21,15 @@ export function JarreSliders({ sendData, setSendData, toggleShowSliders }) {
         min="0"
         max="8"
       />
-      <SliderIngredient id="the-noir" nom="Thé noir" value={theNoir} setValue={setTheNoir} min="0" max="8" />
+      <SliderIngredient
+        id="the-noir"
+        nom="Thé noir"
+        value={theNoir}
+        setValue={setTheNoir}
+        unite="sachets"
+        min="0"
+        max="8"
+      />
     </div>
   );
 }

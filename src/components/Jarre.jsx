@@ -2,22 +2,74 @@ import { FillButton } from './forms/FillButton.jsx';
 import { useToggle } from './hooks/useToggle.js';
 import { JarreSliders } from './JarreSliders.jsx';
 import { JarreStatut } from './JarreStatut.jsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function Jarre({ className }) {
   const [showSliders, toggleShowSliders] = useToggle(false);
-  const [sendData, setSendData] = useState(false);
+  const [sucre, setSucre] = useState('200');
+  const [theVert, setTheVert] = useState('2');
+  const [theNoir, setTheNoir] = useState('5');
+  const [currentJarre, setCurrentJarre] = useState({});
+
+  const fetchJarre = () => {
+    fetch('http://localhost:4000/jarres', {
+      headers: {
+        Accept: 'application/json; charset=UTF-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          setCurrentJarre(data.at(-1));
+        }
+      });
+  };
+
+  const sendJarre = () => {
+    fetch('http://localhost:4000/jarres', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: 4,
+        sucre: sucre,
+        theVert: theVert,
+        theNoir: theNoir,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleSubmit = () => {
-    setSendData(true);
+    sendJarre();
+    toggleShowSliders();
+    fetchJarre();
   };
+
+  useEffect(() => {
+    fetchJarre();
+  }, []);
 
   return (
     <div className={className}>
       <h2>Jarre</h2>
-      <JarreStatut sendData={sendData} />
+      <JarreStatut currentJarre={currentJarre} />
       {showSliders && (
-        <JarreSliders sendData={sendData} setSendData={setSendData} toggleShowSliders={toggleShowSliders} />
+        <JarreSliders
+          sucre={sucre}
+          setSucre={setSucre}
+          theVert={theVert}
+          setTheVert={setTheVert}
+          theNoir={theNoir}
+          setTheNoir={setTheNoir}
+        />
       )}
       <FillButton showSliders={showSliders} onToggle={toggleShowSliders} onSubmit={handleSubmit} />
     </div>
