@@ -12,7 +12,6 @@ export function Jarre({ className }) {
   const [theNoir, setTheNoir] = useState('5');
   const [currentJarre, setCurrentJarre] = useState({});
   const [jarres, setJarres] = useState({});
-  const [jarreId, setJarreId] = useState(0);
 
   const fetchJarre = useCallback(() => {
     fetch('http://localhost:4000/jarres', {
@@ -33,7 +32,7 @@ export function Jarre({ className }) {
     fetch('http://localhost:4000/jarres', {
       method: 'POST',
       body: JSON.stringify({
-        id: jarreId,
+        id: currentJarre ? currentJarre.id + 1 : 0,
         sucre: sucre,
         theVert: theVert,
         theNoir: theNoir,
@@ -46,24 +45,42 @@ export function Jarre({ className }) {
       .catch((err) => {
         console.log(err);
       });
-  }, [sucre, theNoir, theVert, jarreId]);
+  }, [sucre, theNoir, theVert, currentJarre]);
+
+  const deleteJarre = useCallback(
+    (id) => {
+      fetch('http://localhost:4000/jarres/del', {
+        method: 'POST',
+        body: JSON.stringify({
+          id: id,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .catch((err) => {
+          console.log(err);
+        });
+      fetchJarre();
+    },
+    [fetchJarre],
+  );
 
   const handleSubmit = useCallback(() => {
     sendJarre();
-    setJarreId((v) => v + 1);
     toggleShowSliders();
     fetchJarre();
   }, [sendJarre, toggleShowSliders, fetchJarre]);
 
   useEffect(() => {
     fetchJarre();
-    setJarreId(jarres.length ? jarres.length : 0);
   }, []);
 
   return (
     <div className={className}>
       <h2>Jarre</h2>
-      <JarreStatut currentJarre={currentJarre} />
+      <JarreStatut currentJarre={currentJarre} onDelete={deleteJarre} />
       {showSliders && (
         <JarreSliders
           sucre={sucre}
@@ -75,7 +92,7 @@ export function Jarre({ className }) {
         />
       )}
       <FillButton showSliders={showSliders} onToggle={toggleShowSliders} onSubmit={handleSubmit} />
-      <OlderJarres jarres={jarres} />
+      <OlderJarres jarres={jarres} onDelete={deleteJarre} />
     </div>
   );
 }
