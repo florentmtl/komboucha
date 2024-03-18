@@ -1,16 +1,16 @@
 import { useToggle } from './hooks/useToggle.js';
 import { OlderJarresList } from './OlderJarresList.jsx';
 
-export function OlderJarres({ jarres, onDelete }) {
+export function OlderJarres({ className, jarres, onDelete }) {
   const [displayOldJarres, toggleDisplayOldJarres] = useToggle(false);
 
   if (jarres.length < 1) {
-    return <div></div>;
+    return <div className={className}></div>;
   }
 
   return (
-    <div>
-      <button onClick={toggleDisplayOldJarres}>
+    <div className={className}>
+      <button className="btn btn-primary mb-3" onClick={toggleDisplayOldJarres}>
         {displayOldJarres ? 'Cacher anciennes jarres' : 'Anciennes jarres'}
       </button>
       {displayOldJarres && (

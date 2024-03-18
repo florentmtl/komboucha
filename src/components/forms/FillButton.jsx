@@ -1,15 +1,21 @@
-export function FillButton({ showSliders, onToggle, onSubmit }) {
+export function FillButton({ showSliders, onToggle, onSubmit, className }) {
   if (showSliders) {
     return (
-      <div>
-        <button onClick={onToggle}>Annuler</button>
-        <button onClick={onSubmit}>Confirmer</button>
+      <div className={className}>
+        <button className="btn btn-primary me-3" onClick={onToggle}>
+          Annuler
+        </button>
+        <button className="btn btn-primary" onClick={onSubmit}>
+          Confirmer
+        </button>
       </div>
     );
   } else {
     return (
-      <div>
-        <button onClick={onToggle}>Nouveau remplissage</button>
+      <div className={className}>
+        <button className="btn btn-primary" onClick={onToggle}>
+          Nouveau remplissage
+        </button>
       </div>
     );
   }

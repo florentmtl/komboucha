@@ -5,7 +5,9 @@ export function OlderJarresList({ jarres, onDelete }) {
         {jarres.map((item) => (
           <li key={item.id}>
             Komboucha numéro {item.id}
-            <button onClick={() => onDelete(item.id)}>Supprimer</button>
+            <button className="btn btn-secondary" onClick={() => onDelete(item.id)}>
+              Supprimer
+            </button>
             <ul>
               <li key="sucre">Sucre : {item.sucre} grammes</li>
               <li key="theNoir">Thé noir : {item.theNoir} sachets</li>

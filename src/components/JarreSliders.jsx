@@ -2,7 +2,7 @@ import { SliderIngredient } from './forms/SliderIngredient.jsx';
 
 export function JarreSliders({ sucre, setSucre, theVert, setTheVert, theNoir, setTheNoir }) {
   return (
-    <div>
+    <div className="mb-3">
       <SliderIngredient
         id="sucre-jarre"
         nom="Sucre"

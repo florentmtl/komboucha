@@ -80,7 +80,7 @@ export function Jarre({ className }) {
   return (
     <div className={className}>
       <h2>Jarre</h2>
-      <JarreStatut currentJarre={currentJarre} onDelete={deleteJarre} />
+      <JarreStatut className="mb-3" currentJarre={currentJarre} onDelete={deleteJarre} />
       {showSliders && (
         <JarreSliders
           sucre={sucre}
@@ -91,8 +91,13 @@ export function Jarre({ className }) {
           setTheNoir={setTheNoir}
         />
       )}
-      <FillButton showSliders={showSliders} onToggle={toggleShowSliders} onSubmit={handleSubmit} />
-      <OlderJarres jarres={jarres} onDelete={deleteJarre} />
+      <FillButton
+        className="mb-3 mx-auto"
+        showSliders={showSliders}
+        onToggle={toggleShowSliders}
+        onSubmit={handleSubmit}
+      />
+      <OlderJarres className="mb-3" jarres={jarres} onDelete={deleteJarre} />
     </div>
   );
 }
