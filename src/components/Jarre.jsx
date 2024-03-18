@@ -10,6 +10,7 @@ export function Jarre({ className }) {
   const [sucre, setSucre] = useState('200');
   const [theVert, setTheVert] = useState('2');
   const [theNoir, setTheNoir] = useState('5');
+  const [date, setDate] = useState(new Date());
   const [currentJarre, setCurrentJarre] = useState({});
   const [jarres, setJarres] = useState({});
 
@@ -36,6 +37,7 @@ export function Jarre({ className }) {
         sucre: sucre,
         theVert: theVert,
         theNoir: theNoir,
+        date: date,
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -45,7 +47,7 @@ export function Jarre({ className }) {
       .catch((err) => {
         console.log(err);
       });
-  }, [sucre, theNoir, theVert, currentJarre]);
+  }, [sucre, theNoir, theVert, date, currentJarre]);
 
   const deleteJarre = useCallback(
     (id) => {
@@ -89,6 +91,8 @@ export function Jarre({ className }) {
           setTheVert={setTheVert}
           theNoir={theNoir}
           setTheNoir={setTheNoir}
+          date={date}
+          setDate={setDate}
         />
       )}
       <FillButton

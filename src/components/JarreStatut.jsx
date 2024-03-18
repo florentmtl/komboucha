@@ -18,6 +18,7 @@ export function JarreStatut({ className, currentJarre, onDelete }) {
         <div>Sucre : {currentJarre.sucre} grammes</div>
         <div>Thé noir : {currentJarre.theNoir} sachets</div>
         <div>Thé vert : {currentJarre.theVert} sachets</div>
+        <div>Date : {new Date(currentJarre.date).toDateString()}</div>
       </div>
     );
   }

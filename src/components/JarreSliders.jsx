@@ -1,6 +1,8 @@
 import { SliderIngredient } from './forms/SliderIngredient.jsx';
+import DatePicker from 'react-datepicker';
 
-export function JarreSliders({ sucre, setSucre, theVert, setTheVert, theNoir, setTheNoir }) {
+import 'react-datepicker/dist/react-datepicker.css';
+export function JarreSliders({ sucre, setSucre, theVert, setTheVert, theNoir, setTheNoir, date, setDate }) {
   return (
     <div className="mb-3">
       <SliderIngredient
@@ -29,6 +31,12 @@ export function JarreSliders({ sucre, setSucre, theVert, setTheVert, theNoir, se
         unite="sachets"
         min="0"
         max="8"
+      />
+      <DatePicker
+        selected={date}
+        onChange={(ladate) => {
+          setDate(ladate);
+        }}
       />
     </div>
   );

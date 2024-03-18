@@ -9,6 +9,7 @@ const router = createBrowserRouter([
       <div className="container">
         <nav>
           <NavLink to={'/contact'}>Contact</NavLink>
+          <NavLink to={'/calendar'}>Calendrier</NavLink>
         </nav>
         <h1>Kombucha - Tableau de bord</h1>
         <div className="row">
@@ -26,8 +27,27 @@ const router = createBrowserRouter([
       <div>
         <nav>
           <NavLink to={'/'}>Tableau de bord</NavLink>
+          <NavLink to={'/calendar'}>Calendrier</NavLink>
         </nav>
         <div>le contact</div>
+      </div>
+    ),
+  },
+  {
+    path: '/calendar',
+    element: (
+      <div>
+        <nav>
+          <NavLink to={'/'}>Tableau de bord</NavLink>
+          <NavLink to={'/contact'}>Contact</NavLink>
+        </nav>
+        <h1>Kombucha - Historique détaillé</h1>
+        <div className="row">
+          <Jarre className="col-3" />
+          <Bouteille className="col-3" number="1" />
+          <Bouteille className="col-3" number="2" />
+          <Bouteille className="col-3" number="3" />
+        </div>
       </div>
     ),
   },
