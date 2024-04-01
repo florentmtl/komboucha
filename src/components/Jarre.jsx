@@ -1,7 +1,7 @@
 import { FillButton } from './forms/FillButton.jsx';
 import { useToggle } from './hooks/useToggle.js';
 import { JarreSliders } from './JarreSliders.jsx';
-import { JarreStatut } from './JarreStatut.jsx';
+import { JarreDisplay } from './JarreDisplay.jsx';
 import { useCallback, useEffect, useState } from 'react';
 import { OlderJarres } from './OlderJarres.jsx';
 
@@ -38,6 +38,7 @@ export function Jarre({ className }) {
         theVert: theVert,
         theNoir: theNoir,
         date: date,
+        finished: false,
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -69,6 +70,23 @@ export function Jarre({ className }) {
     [fetchJarre],
   );
 
+  const markAsFinished = useCallback(
+    (id) => {
+      fetch('http://localhost:4000/jarres/finished/' + id, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .catch((err) => {
+          console.log(err);
+        });
+      fetchJarre();
+    },
+    [fetchJarre],
+  );
+
   const handleSubmit = useCallback(() => {
     sendJarre();
     toggleShowSliders();
@@ -82,7 +100,7 @@ export function Jarre({ className }) {
   return (
     <div className={className}>
       <h2>Jarre</h2>
-      <JarreStatut className="mb-3" currentJarre={currentJarre} onDelete={deleteJarre} />
+      <JarreDisplay className="mb-3" jarre={currentJarre} onDelete={deleteJarre} markAsFinished={markAsFinished} />
       {showSliders && (
         <JarreSliders
           sucre={sucre}
@@ -101,7 +119,7 @@ export function Jarre({ className }) {
         onToggle={toggleShowSliders}
         onSubmit={handleSubmit}
       />
-      <OlderJarres className="mb-3" jarres={jarres} onDelete={deleteJarre} />
+      <OlderJarres className="mb-3" jarres={jarres} onDelete={deleteJarre} markAsFinished={markAsFinished} />
     </div>
   );
 }

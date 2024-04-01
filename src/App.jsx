@@ -36,7 +36,7 @@ const router = createBrowserRouter([
   {
     path: '/calendar',
     element: (
-      <div>
+      <div className="container">
         <nav>
           <NavLink to={'/'}>Tableau de bord</NavLink>
           <NavLink to={'/contact'}>Contact</NavLink>

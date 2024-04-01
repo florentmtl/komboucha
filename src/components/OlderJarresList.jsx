@@ -1,18 +1,12 @@
-export function OlderJarresList({ jarres, onDelete }) {
+import { JarreDisplay } from "./JarreDisplay";
+
+export function OlderJarresList({ jarres, onDelete, markAsFinished }) {
   return (
     <div>
       <ul>
         {jarres.map((item) => (
           <li key={item.id}>
-            Komboucha numéro {item.id}
-            <button className="btn btn-secondary" onClick={() => onDelete(item.id)}>
-              Supprimer
-            </button>
-            <ul>
-              <li key="sucre">Sucre : {item.sucre} grammes</li>
-              <li key="theNoir">Thé noir : {item.theNoir} sachets</li>
-              <li key="theVert">Thé vert : {item.theVert} sachets</li>
-            </ul>
+            <JarreDisplay jarre={item} onDelete={onDelete} markAsFinished={markAsFinished}/>
           </li>
         ))}
       </ul>
