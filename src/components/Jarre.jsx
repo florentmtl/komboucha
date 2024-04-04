@@ -1,9 +1,9 @@
 import { FillButton } from './forms/FillButton.jsx';
 import { useToggle } from './hooks/useToggle.js';
 import { JarreSliders } from './JarreSliders.jsx';
-import { JarreDisplay } from './JarreDisplay.jsx';
 import { useCallback, useEffect, useState } from 'react';
 import { OlderJarres } from './OlderJarres.jsx';
+import { JarresDisplayList } from './JarresDisplayList.jsx';
 
 export function Jarre({ className }) {
   const [showSliders, toggleShowSliders] = useToggle(false);
@@ -11,7 +11,6 @@ export function Jarre({ className }) {
   const [theVert, setTheVert] = useState('2');
   const [theNoir, setTheNoir] = useState('5');
   const [date, setDate] = useState(new Date());
-  const [currentJarre, setCurrentJarre] = useState({});
   const [jarres, setJarres] = useState({});
 
   const fetchJarre = useCallback(() => {
@@ -24,7 +23,6 @@ export function Jarre({ className }) {
       .then((data) => {
         if (data) {
           setJarres(data);
-          setCurrentJarre(data.at(-1));
         }
       });
   }, []);
@@ -33,7 +31,6 @@ export function Jarre({ className }) {
     fetch('http://localhost:4000/jarres', {
       method: 'POST',
       body: JSON.stringify({
-        id: currentJarre ? currentJarre.id + 1 : 0,
         sucre: sucre,
         theVert: theVert,
         theNoir: theNoir,
@@ -48,7 +45,7 @@ export function Jarre({ className }) {
       .catch((err) => {
         console.log(err);
       });
-  }, [sucre, theNoir, theVert, date, currentJarre]);
+  }, [sucre, theNoir, theVert, date]);
 
   const deleteJarre = useCallback(
     (id) => {
@@ -100,7 +97,13 @@ export function Jarre({ className }) {
   return (
     <div className={className}>
       <h2>Jarre</h2>
-      <JarreDisplay className="mb-3" jarre={currentJarre} onDelete={deleteJarre} markAsFinished={markAsFinished} />
+      {jarres.length > 0 && (
+        <JarresDisplayList
+          jarres={jarres.filter((item) => !item.finished)}
+          onDelete={deleteJarre}
+          markAsFinished={markAsFinished}
+        />
+      )}
       {showSliders && (
         <JarreSliders
           sucre={sucre}

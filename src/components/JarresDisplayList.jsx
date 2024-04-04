@@ -1,6 +1,6 @@
 import { JarreDisplay } from "./JarreDisplay";
 
-export function OlderJarresList({ jarres, onDelete, markAsFinished }) {
+export function JarresDisplayList({ jarres, onDelete, markAsFinished }) {
   return (
     <div>
       <ul>
