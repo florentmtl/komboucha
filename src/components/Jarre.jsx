@@ -1,17 +1,20 @@
 import { FillButton } from './forms/FillButton.jsx';
 import { useToggle } from './hooks/useToggle.js';
 import { JarreSliders } from './JarreSliders.jsx';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, lazy, Suspense } from 'react';
 import { OlderJarres } from './OlderJarres.jsx';
-import { JarresDisplayList } from './JarresDisplayList.jsx';
+import { JarreGenerator } from './JarreGenerator.jsx';
 
 export function Jarre({ className }) {
+  console.log('Jarre');
   const [showSliders, toggleShowSliders] = useToggle(false);
   const [sucre, setSucre] = useState('200');
   const [theVert, setTheVert] = useState('2');
   const [theNoir, setTheNoir] = useState('5');
   const [date, setDate] = useState(new Date());
   const [jarres, setJarres] = useState({});
+
+  const JarresDisplayListLazy = lazy(() => import('./JarresDisplayList.jsx'));
 
   const fetchJarre = useCallback(() => {
     fetch('http://localhost:4000/jarres', {
@@ -98,11 +101,13 @@ export function Jarre({ className }) {
     <div className={className}>
       <h2>Jarre</h2>
       {jarres.length > 0 && (
-        <JarresDisplayList
-          jarres={jarres.filter((item) => !item.finished)}
-          onDelete={deleteJarre}
-          markAsFinished={markAsFinished}
-        />
+        <Suspense fallback={<div>chargement des kombouches</div>}>
+          <JarresDisplayListLazy
+            jarres={jarres.filter((item) => !item.finished)}
+            onDelete={deleteJarre}
+            markAsFinished={markAsFinished}
+          />
+        </Suspense>
       )}
       {showSliders && (
         <JarreSliders
@@ -122,7 +127,7 @@ export function Jarre({ className }) {
         onToggle={toggleShowSliders}
         onSubmit={handleSubmit}
       />
-      <OlderJarres className="mb-3" jarres={jarres} onDelete={deleteJarre} markAsFinished={markAsFinished} />
+      <JarreGenerator />
     </div>
   );
 }

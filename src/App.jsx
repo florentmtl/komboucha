@@ -2,16 +2,46 @@ import { Jarre } from './components/Jarre.jsx';
 import { Bouteille } from './components/Bouteille.jsx';
 import { createBrowserRouter, NavLink, RouterProvider } from 'react-router-dom';
 
+function LaNavBar() {
+  return (
+    <nav className="navbar navbar-expand-lg">
+      <div className="collapse navbar-collapse">
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <NavLink className="nav-link" to={'/'}>
+              Tableau de bord
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to={'/contact'}>
+              Contact
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to={'/calendar'}>
+              Calendrier
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+}
+
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <div className="container">
-        <nav>
-          <NavLink to={'/contact'}>Contact</NavLink>
-          <NavLink to={'/calendar'}>Calendrier</NavLink>
-        </nav>
-        <h1>Kombucha - Tableau de bord</h1>
+      <div className="container mainDiv">
+        <LaNavBar />
+        <div className="container text-center">
+          <div className="row">
+            <h1>Kombucha</h1>
+          </div>
+          <div className="row">
+            <h2>Tableau de bord</h2>
+          </div>
+        </div>
         <div className="row">
           <Jarre className="col-3" />
           <Bouteille className="col-3" number="1" />
@@ -25,10 +55,8 @@ const router = createBrowserRouter([
     path: '/contact',
     element: (
       <div>
-        <nav>
-          <NavLink to={'/'}>Tableau de bord</NavLink>
-          <NavLink to={'/calendar'}>Calendrier</NavLink>
-        </nav>
+        <LaNavBar />
+
         <div>le contact</div>
       </div>
     ),
@@ -37,11 +65,16 @@ const router = createBrowserRouter([
     path: '/calendar',
     element: (
       <div className="container">
-        <nav>
-          <NavLink to={'/'}>Tableau de bord</NavLink>
-          <NavLink to={'/contact'}>Contact</NavLink>
-        </nav>
-        <h1>Kombucha - Historique détaillé</h1>
+        <LaNavBar />
+
+        <div className="container text-center">
+          <div className="row">
+            <h1>Kombucha</h1>
+          </div>
+          <div className="row">
+            <h2>Historique détaillé</h2>
+          </div>
+        </div>
         <div className="row">
           <Jarre className="col-3" />
           <Bouteille className="col-3" number="1" />

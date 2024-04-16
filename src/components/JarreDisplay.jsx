@@ -1,4 +1,5 @@
 export function JarreDisplay({ className, jarre, onDelete, markAsFinished }) {
+
   if (jarre) {
     return (
       <div className={className}>

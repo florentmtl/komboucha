@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 /**
  *
  * @param {string} id
@@ -7,10 +9,12 @@
  * @returns {JSX.Element}
  * @constructor
  */
-export function SliderIngredient({ id, nom, value, setValue, unite, min, max }) {
+export function SliderIngredient({ nom, value, setValue, unite, min, max }) {
   const handleSlide = (e) => {
     setValue(e.target.value);
   };
+
+  const id = useId();
 
   return (
     <div>
